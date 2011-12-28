@@ -1,0 +1,14 @@
+<%= form_for @checklist do |f|%>
+	<%= render 'shared/error_messages', :object => f.object %>
+
+	<div id="form_title">
+		<%= f.label "Title: "%>
+		<%= f.text_field :title %>
+	</div>
+	
+	<div id="form_description">
+		<%= f.label "Description" %>
+		<%= f.text_field :description%>
+	</div>
+
+<% end %>
