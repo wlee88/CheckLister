@@ -1,8 +1,13 @@
 class Checklist < ActiveRecord::Base
   has_many :items, :dependent => :destroy
   has_many :comments, :dependent => :destroy
-  has_many :users, :through => :checklist_accesses
+  has_many :users, :through => :checklist_accessors
   belongs_to :owner, :class_name => 'User'
+  
+  validates :title, :presence => true
+  validates :description, :presence => true
+  validates :owner, :presence => true
+  
 end
 
 

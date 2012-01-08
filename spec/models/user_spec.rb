@@ -28,7 +28,7 @@ describe User do
     end
     
     it "should not allow a blank name" do
-      @user.name = ""
+      @user.username = ""
       @user.should_not be_valid
     end
   end

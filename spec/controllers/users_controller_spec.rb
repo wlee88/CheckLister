@@ -4,14 +4,18 @@ describe UsersController do
   render_views
   describe 'GET' do
     describe "new" do
-      get :new
-      response.should be_success
+      it "should be successful" do
+        get :new
+        response.should be_success
+      end
     end
     
     describe "edit" do
       @user = Factory(:user)
-      get :edit, :id => @user
-      response.should render_template(edit_user_path)
+      it "shold be successful" do
+        get :edit, :id => @user
+        response.should render_template(edit_user_path)
+      end
     end
     
     describe "show"do

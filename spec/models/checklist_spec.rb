@@ -35,41 +35,88 @@ describe Checklist do
       
   end
   
-  describe "validiations: " do
+  describe "validations: " do
     before (:each) do
       @checklist = Checklist.new(:title => Faker::Lorem.sentence(1),
        :description => Faker::Lorem.sentence(5), :owner => Factory(:user))
     end
-    it "should not allow a blank title" do
-      @checklist.title = ""
-      @checklist.should_not be_valid
+    describe "nil validatons" do
+      it "should not allow a blank title" do
+        @checklist.title = ""
+        @checklist.should_not be_valid
+      end
+      
+      it "should not allow a blank description" do
+        @checklist.description = ""
+        @checklist.should_not be_valid
+      end
+    
+      it "should have an owner assigned" do
+        @checklist.owner = nil
+        @checklist.should_not be_valid
+      end
     end
     
-    it "should not allow a blank description" do
-      @checklist.description = ""
-      @checklist.should_not be_valid
+    describe "length validations" do
+      it "should not allow title that is too short" do
+        @checklist.title = "."
+        @checklist.should_not be_valid
+      end
+      
+      it "should not allow a title that is far too long" do
+        @checklist.title = "c" * 50
+        @checklist.should_not be_valid
+      end
+
+      
+      it "should not allow a description that is far too long" do
+        @checklist.description = "c" * 5000
+        @checklist.should_not be_valid
+      end
     end
     
-    it "should have an owner assigned" do
-      @checklist.owner = nil
-      @checklist.should_not be_valid
-    end
   end
   
   describe "checklist items association" do
-    it "should allow multiple items" do
-      @user = Factory(:user)
+    before(:each) do
+      @checklist = Factory(:checklist)
       @attr1 =  {:title => "item1", :complete => true, :owner => @user}
       @attr2 = {:title => "item2", :complete => false, :owner => @user}
       @attr3 = {:title => "item3", :complete => true, :owner => @user }
       @checklist.items.build(@attr1)
       @checklist.items.build(@attr2)
       @checklist.items.build(@attr3)
+    end
     
+    it "should allow multiple items" do
+      @user = Factory(:user)
+      @checklist.owner = @user
+      @checklist.save
+
       @checklist.items.should have(3).records
       @user.checklists.should have(1).record
       Checklist.should have(1).record
       Item.should have(3).records
+    end
+    
+    it "should have 5 users linked(permitted access)" do
+      
+      
+      @user = Factory(:user)
+      @user2 = Factory(:user)
+      @user3 = Factory(:user)
+      
+      @checklist.users << [@user, @user2, @user3]
+      @checklist.save! 
+      
+      @checklist.users.should have(3).records
+      Checklist.shoud have(1).record
+      User.should have(3).records
+      
+      @user.checklists.should have(1).record
+      @user2.checklists.should have(1).record
+      @user3.checklists.should have(1).record
+
     end
     
     

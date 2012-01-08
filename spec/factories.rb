@@ -5,6 +5,7 @@ end
 Factory.define :checklist do |checklist|
   checklist.title   Faker::Lorem.sentence(1)
   checklist.description Faker::Lorem.sentence(5)
+  checklist.owner  Factory(:user)
 end
 
 Factory.define :item do |item|

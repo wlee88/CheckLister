@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   has_many :checklists
   has_many :comments
 
+  validates :username, :presence => true
 end
 
 # == Schema Information

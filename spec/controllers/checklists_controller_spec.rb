@@ -19,7 +19,7 @@ describe ChecklistsController do
           @checklist = Factory(:checklist)
           get :edit, :id => @checklist
           response.should be_success
-          response.should render_template(edit_checklist_path(@checklist))
+          response.should render_template('edit')
         end
       end
       
@@ -35,22 +35,34 @@ describe ChecklistsController do
     
     describe "POST" do
       before(:each) do
-        @attr = { :title => "some title",
-          :description => "some description of a checklist",
-          :owner => Factory(:user) 
-          }
+         @attr = { :title => "some title",
+            :description => "some description of a checklist",
+            :owner => Factory(:user) 
+            }
       end
       
       describe 'create' do
-        it "should create a new checklist" do
-          @checklist = Checklist.new(@attr)
-          lambda do
-            post :create, :checklist => @checklist
-            response.should redirect_to(checklists_path)
-          end.should change(Checklist, :count).by(1)
-          
-        end #it should create a new checklist end
-      end #should create a new checklist end
+        describe 'success' do
+          it "should create a new checklist" do
+            lambda do
+              post :create, :checklist => @attr
+              response.should redirect_to(checklists_path)
+            end.should change(Checklist, :count).by(1)
+            
+          end #it should create a new checklist end
+        end #success
+        
+        describe 'failure' do
+          it 'should now create a new checklist' do
+            @attr = { :owner => nil, :title => ""} #purposefully bad validations
+            lambda do
+              post :create, :checklist => @attr
+              response.should_not redirect_to(checklists_path)
+              response.should render_template('new')
+            end.should_not change(Checklist, :count).by(1)
+          end
+        end
+      end #end create
       
       describe 'update' do
         

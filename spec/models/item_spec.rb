@@ -44,6 +44,21 @@ describe Item do
         @item.checklist = nil
         @item.should_not be_valid
       end
+      
+      it "should not allow one letter title" do
+        @item.title = "sd"
+        @item.should_not be_valid
+      end
+      
+      it "should not allow too long a title" do
+        @item.title = "h" * 40
+        @item.should_not be_valid
+      end
+      
+      it "should not allow a description that is waaay tooo long " do
+        @item.description = "h" * 7000
+        @item.should_not be_valid
+      end
     end
     
   end
