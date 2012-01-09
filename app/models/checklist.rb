@@ -11,6 +11,10 @@ class Checklist < ActiveRecord::Base
 end
 
 
+
+
+
+
 # == Schema Information
 #
 # Table name: checklists
@@ -21,6 +25,6 @@ end
 #  item_id     :integer
 #  created_at  :datetime
 #  updated_at  :datetime
-#  owner       :integer
+#  owner_id    :integer
 #
 

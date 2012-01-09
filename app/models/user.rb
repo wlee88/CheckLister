@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   has_many :checklists
   has_many :comments
+  
+  has_many :attendances, :dependent => :destroy
+  has_many :items, :through => :attendances
 
   validates :username, :presence => true
 end

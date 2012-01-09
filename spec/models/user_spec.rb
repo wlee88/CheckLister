@@ -13,13 +13,20 @@ describe User do
   end 
     
   describe "relationships" do
-    it "should respond to 'list'" do
-      @user.should respond_to(:checklists)
+    before(:each) do
+      @user = User.new
     end
+      it "should respond to 'list'" do
+        @user.should respond_to(:checklists)
+      end
+        
+      it "should respond to 'comments'" do
+        @user.should respond_to(:comments)
+      end    
       
-    it "should respond to 'comments'" do
-      @user.should respond_to(:comments)
-    end    
+      it "should respond to 'items'" do
+        @user.should respond_to(:items)
+      end
   end #relationships end
   
   describe "validations" do
@@ -27,10 +34,12 @@ describe User do
       @user = User.new(:username => Faker::Name.first_name)
     end
     
-    it "should not allow a blank name" do
+    it "should not allow a blank username" do
       @user.username = ""
       @user.should_not be_valid
     end
+    
+    it "should only allow unique names"
   end
 end
 

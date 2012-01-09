@@ -1,5 +1,5 @@
 Factory.define :user do |user|
-  user.username     Faker::Name.first_name + "-" + Faker::Name.last_name
+  user.username   Faker::Name.first_name +  "-" + Faker::Name.last_name
 end
 
 Factory.define :checklist do |checklist|
@@ -9,6 +9,6 @@ Factory.define :checklist do |checklist|
 end
 
 Factory.define :item do |item|
-  item.title  Faker::Name.last_name
+  item.content  Faker::Name.last_name
   item.complete true
 end

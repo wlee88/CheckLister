@@ -80,12 +80,12 @@ describe Checklist do
   describe "checklist items association" do
     before(:each) do
       @checklist = Factory(:checklist)
-      @attr1 =  {:title => "item1", :complete => true, :owner => @user}
-      @attr2 = {:title => "item2", :complete => false, :owner => @user}
-      @attr3 = {:title => "item3", :complete => true, :owner => @user }
-      @checklist.items.build(@attr1)
-      @checklist.items.build(@attr2)
-      @checklist.items.build(@attr3)
+      @item1 =  {:content => "item1", :complete => true, :owner => @user}
+      @item2 = {:content => "item2", :complete => false, :owner => @user}
+      @item3 = {:content => "item3", :complete => true, :owner => @user }
+      @checklist.items.build(@item1)
+      @checklist.items.build(@item2)
+      @checklist.items.build(@item3)
     end
     
     it "should allow multiple items" do
@@ -125,6 +125,8 @@ describe Checklist do
 end
 
 
+
+
 # == Schema Information
 #
 # Table name: checklists
@@ -135,6 +137,6 @@ end
 #  item_id     :integer
 #  created_at  :datetime
 #  updated_at  :datetime
-#  owner       :integer
+#  owner_id    :integer
 #
 

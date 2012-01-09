@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120107103357) do
+ActiveRecord::Schema.define(:version => 20120109215920) do
+
+  create_table "attendances", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "item_id"
+    t.boolean  "complete",   :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "checklist_accessors", :force => true do |t|
     t.integer "user_id"
@@ -24,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20120107103357) do
     t.integer  "item_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "owner"
+    t.integer  "owner_id"
   end
 
   create_table "comments", :force => true do |t|
@@ -36,12 +44,12 @@ ActiveRecord::Schema.define(:version => 20120107103357) do
   end
 
   create_table "items", :force => true do |t|
-    t.string   "title"
+    t.string   "content"
     t.boolean  "complete"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "checklist_id"
-    t.integer  "user_id"
+    t.integer  "owner_id"
   end
 
   create_table "users", :force => true do |t|
