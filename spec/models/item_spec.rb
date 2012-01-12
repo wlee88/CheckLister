@@ -22,10 +22,6 @@ describe Item do
       @item.should respond_to(:checklist)
     end
       
-    it "should respond to 'owner'" do
-      @item.should respond_to(:owner)
-    end
-      
   end
     
   describe "Validations" do
@@ -61,7 +57,7 @@ describe Item do
     end
     
     it "should not allow content that is waaay tooo long " do
-      @item.title = "h" * 7000
+      @item.title = "h" * 200
       @item.should_not be_valid
     end
     
@@ -78,6 +74,8 @@ describe Item do
       @user = Factory(:user)
       @user2 = Factory(:user)
       @user3 = Factory(:user)
+      @item.users << [@user, @user2, @user3]
+      
     end
       
       it "should allow users to be allocated to items" do
@@ -86,13 +84,67 @@ describe Item do
       end
       
       it "should allow me to check if a user has done a specfic item or not" do
-        @item.users << [@user, @user2, @user3]
         @item.users.first.should == @user
-        @item.attendances.find_by_user_id(@user).complete = true
+        @item.complete?(@user).should be_false
+      end
+      
+      it "should be able to set true" do
+        @item.set_true(@user)
         @item.complete?(@user).should be_true
       end
       
+      it "should be able to set false" do
+        @item.set_false(@user)
+        @item.complete?(@user).should be_false
+      end
+      
+      it "should toggle boolean" do
+        @item.set_true(@user)
+        @item.toggle(@user)
+        @item.complete?(@user).should be_false
+        
+        @item.toggle(@user)
+        @item.complete?(@user).should be_false
+      end
+      
     end #attendances assoication
+    
+    describe "methods" do
+      before (:each) do
+        @item = Factory(:item)
+        @user = Factory(:user)
+        @user2 = Factory(:user)
+        @user3 = Factory(:user)
+        @item.users << [@user, @user2, @user3]
+      end
+      
+      it "'set_true' should set an item to true" do
+        @item.set_true(@user)
+        @item.complete?(@user).should be_true
+      end
+      it "'set_false' should set an item to false" do
+        @item.set_true(@user)
+        @item.complete?(@user).should be_false
+      end
+      it "'toggle' should toggle a true item to false" do
+        @item.set_true(@user)
+        @item.toggle(@user).should be_false
+      end
+      it "'toggle' should toggle a false item to true" do
+        @item.set_false(@user)
+        @item.toggle(@user).should be_true
+      end
+    end
+    
+    describe "scenarios" do
+     # it "an item owned by a user has a checklist and adds 3 users to the checklist access list. He wants to see if they a certain user has done the task" do
+     #   @user = Factory(:user)
+     #   @user.checklists.build(:title => Faker::Lorem.sentence(1), :description => Faker::Lorem.sentence(2))
+     #   @user.items.build(:content => Faker::Lorem.sentence(1))
+     #   @user.checklists.first.items << 
+     # end
+      
+    end
 end
 
 

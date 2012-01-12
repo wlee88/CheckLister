@@ -2,10 +2,15 @@ class User < ActiveRecord::Base
   has_many :checklists
   has_many :comments
   
-  has_many :attendances, :dependent => :destroy
-  has_many :items, :through => :attendances
+  has_many :collaborations
+  has_many :items, :through => :collaborations
+  
+  has_many :checklist_accessors, :dependent => :destroy
+  has_many :checklists, :through => :checklist_accessors
 
   validates :username, :presence => true
+  
+ 
 end
 
 # == Schema Information

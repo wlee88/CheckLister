@@ -39,7 +39,19 @@ describe User do
       @user.should_not be_valid
     end
     
-    it "should only allow unique names"
+    it "should only allow unique names" do
+      @user = Factory(:user)
+      @user2.username = @user.username
+      @user2.should_not be_valid
+    end
+  end
+  
+  describe "method functionality" do
+    it "should reveal the tasks that have not been completed by other users" do
+      @user = Factory(:user)
+      @user.
+    end
+    
   end
 end
 

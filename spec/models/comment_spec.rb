@@ -33,12 +33,17 @@ describe Comment do
       @comment.should_not be_valid
     end
     
-    it "should have list assigned" do
+    it "should not allow content that is greater than 1000 characters" do
+      @comment.content = "a" * 1000
+      @comment.should_not be_valid
+    end
+    
+    it "should have a list assigned" do
       @comment.list_id = nil
       @comment.should_not be_valid
     end
     
-    it "should have user assigned" do
+    it "should have a user assigned" do
       @comment.user_id = nil
       @comment.should_not be_valid
     end

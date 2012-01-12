@@ -10,5 +10,4 @@ end
 
 Factory.define :item do |item|
   item.content  Faker::Name.last_name
-  item.complete true
 end

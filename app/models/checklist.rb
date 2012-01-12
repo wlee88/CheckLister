@@ -1,6 +1,7 @@
 class Checklist < ActiveRecord::Base
   has_many :items, :dependent => :destroy
   has_many :comments, :dependent => :destroy
+  has_many :checklist_accessors, :dependent => :destroy
   has_many :users, :through => :checklist_accessors
   belongs_to :owner, :class_name => 'User'
   
@@ -8,6 +9,7 @@ class Checklist < ActiveRecord::Base
   validates :description, :presence => true
   validates :owner, :presence => true
   
+   #TO DO.. before save of a checklist.. apply all the users added to the checklist to the attendance of each item.
 end
 
 
